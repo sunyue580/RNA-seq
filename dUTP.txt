@@ -1,0 +1,9 @@
+library type		examples
+fr-unstranded		standard illumina
+fr-firststrand		dUTP、NSR、NNSR
+fr-secondstrand		ligation、standard SOLiD
+
+问题：
+1、如果dUTP链特异性测序，看基因表达量应该 counts for the 2nd read strand aligned with RNA(htseq-count option -s reverse, STAR ReadsPerGene.out.tab column 3 ) ??
+2、如果想看反义链是否有转录本（比如NAT）应该用 the 1st read strand aligned with RNA ( htseq-count option -s yes，STAR ReadsPerGene.out.tab column 4)  ??
+
