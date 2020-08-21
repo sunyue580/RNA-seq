@@ -1,0 +1,75 @@
+##fastQC:
+#Sequence Duplication Levels解读：https://zhuanlan.zhihu.com/p/44914479
+
+#fastq文件第一行格式：
+1、@HWUSI-EAS100R:6:73:941:1973#0/1     以前
+HWUSI-EAS100R   the unique instrument name
+6               flowcell lane
+73              tile number within the flowcell lane
+941             'x'-coordinate of the cluster within the tile
+1973            'y'-coordinate of the cluster within the tile
+#0              混合样本中的index编号(0表示没有index)
+/1              the member of a pair, /1 or /2 (paired-end or mate-pair reads only);表示pair配对的成员
+
+2、@EAS139:136:FC706VJ:2:2104:15343:197393 1:Y:18:ATCACG      v1.4以来
+EAS139          the unique instrument name
+136             the run id
+FC706VJ         the flowcell id
+2               flowcell lane
+2104            tile number within the flowcell lane
+15343           'x'-coordinate of the cluster within the tile
+197393          'y'-coordinate of the cluster within the tile
+1               the member of a pair, 1 or 2 (paired-end or mate-pair reads only);1表示read1,2表示read2 
+Y               Y if the read is filtered, N otherwise;Y表示read是坏的,N表示read是好的
+18              0 when none of the control bits are on, otherwise it is an even number
+ATCACG          index sequence
+
+3、@EAS139:136:FC706VJ:2:2104:15343:197393 1:N:18:1          目前
+
+
+#SRA格式
+@SRR001666.1 071112_SLXA-EAS1_s_7:5:1:817:345 length=36
+GGGTGATGGCCGCTGCCGATGGCGTCAAATCCCACC
++SRR001666.1 071112_SLXA-EAS1_s_7:5:1:817:345 length=36
+IIIIIIIIIIIIIIIIIIIIIIIIIIIIII9IG9IC
+
+
+
+#测序编码格式
+						Phred quality score	raw reads typically	ASCII
+S-sanger		 	Phred+33	0-93			0-40			33-126
+X-solexa/illumina1.0		Solexa+64       -5-62			-5-40			59-126
+illumina1.3+			Phred+64	0-62			0-40			64-126		
+illumina1.5+			Phred+64	0-62			3-40			67-104?
+illumina1.8+			Phred+33				0-41			33-74
+注：illumina1.5+中,0和1不再使用,2=Read Segment Quality Control Indicator,即如果一条read结尾处有大量低质量碱基,则整条read标为2,也就是提前过滤
+判断Phred+33和Phred+64:如果大多数是大写字母,数字和字符,则是Phred33;
+                       如果大多数是小写字母,则是Phred64
+
+illumina不同测序仪通量(即1个run能跑出多少数据)：
+1、Hiseq2500（50-1000Gb）
+2、Hiseq3000（125-750Gb）
+3、Hiseq4000（125-1500Gb）
+4、Hiseq X Five（900-1800Gb）
+5、Hiseq X Ten（900-1800Gb）
+
+
+####fastQC：
+/pub/software/FastQC/fastqc -t 12 -o /home/sy1/test/fastqc *.gz
+参数如下:
+- casave 文件来自原始 casave 输出
+-nano 文件来自 naopore 序列，采用 fast5 格式
+-o --outdir FastQC生成的报告文件的储存路径
+--extract 结果文件解压缩
+--noextract 结果文件压缩
+-f --format:输入文件格式.支持bam,sam,fastq文件格式
+-t --threads 选择程序运行的线程数，每个线程会占用250MB内存，越多越快咯
+-c --contaminants 污染物选项，输入的是一个文件，格式是Name [Tab] Sequence，里面是可能的污染序列，如果有这个选项，FastQC会在计算时候评估污染的情况，并在统计的时候进行分析，一般用不到
+-a --adapters 也是输入一个文件，文件的格式Name [Tab] Sequence，储存的是测序的adpater序列信息，如果不输入，目前版本的FastQC就按照通用引物来评估序列时候有adapter的残留
+-k --kmers：指定kmers长度（2-10bp,默认7bp）
+-q --quiet 安静运行模式，一般不选这个选项的时候，程序会实时报告运行的状况。
+-j --java  java二进制文件完整路径
+-nogroup 禁止读取2500bp以上的碱基组
+
+
+

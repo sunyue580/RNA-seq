@@ -1,0 +1,17 @@
+##检查MD5值
+md5sum R1.fastq.gz > md5.txt  #产生md5值
+md5sum -c md5.txt    #检查md5值
+
+##fastQC
+mkdir fastqc
+cd raw
+/pub/software/FastQC/fastqc -t 12 -o /home/sy1/test/fastqc *.gz
+
+##multiqc
+cd ../fastqc
+mkdir multiqc && cd multiqc
+multiqc ../
+#multiqc ../ --ignore que* -z   
+#忽略que开头的zip文件
+#-z表示zip压缩
+
