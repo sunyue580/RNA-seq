@@ -20,8 +20,8 @@ FC706VJ         the flowcell id
 15343           'x'-coordinate of the cluster within the tile
 197393          'y'-coordinate of the cluster within the tile
 1               the member of a pair, 1 or 2 (paired-end or mate-pair reads only);1表示read1,2表示read2 
-Y               Y if the read is filtered, N otherwise;Y表示read是坏的,N表示read是好的
-18              0 when none of the control bits are on, otherwise it is an even number
+Y               Y if the read is filtered, N otherwise;Y表示read是坏的,N表示read是好的;N表示该簇通过了过滤
+18              0 when none of the control bits are on, otherwise it is an even number；一般选择0，phix是1
 ATCACG          index sequence
 
 3、@EAS139:136:FC706VJ:2:2104:15343:197393 1:N:18:1          目前
