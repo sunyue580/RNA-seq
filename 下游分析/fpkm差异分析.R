@@ -7,10 +7,26 @@ library(tibble)
 rt <- column_to_rownames(rt,var = "gene_name")
 
 expMatrix <- rt
+#FPKM转TPM
 fpkmToTpm <- function(fpkm)
 {
   exp(log(fpkm+1) - log(sum(fpkm+1)) + log(1e6))
 }
+##Counts转TPM
+#Counts2TPM <- function(counts, effLen){
+#  rate <- log(counts) - log(effLen)
+#  denom <- log(sum(exp(rate)))
+#  exp(rate - denom + log(1e6))
+#}
+##Counts转FPKM
+#Counts2FPKM <- function(counts, effLen){
+#  N <- sum(counts)
+#  exp( log(counts) + log(1e9) - log(effLen) - log(N) )
+#}
+##Counts转Effective counts
+#Counts2EffCounts <- function(counts, len, effLen){
+#  counts * (len / effLen)
+#}
 tpms <- apply(expMatrix,2,fpkmToTpm)
 tpms[1:3,]
 colSums(tpms)
