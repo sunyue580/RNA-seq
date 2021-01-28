@@ -1,0 +1,10 @@
+1、CPM：
+CPM= A/mapped reads*1000000 A为比对到某基因的reads数(read count)
+
+2、RPKM
+
+3、FPKM
+
+4、TPM
+
+5、TMM
