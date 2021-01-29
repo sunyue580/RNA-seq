@@ -3,7 +3,9 @@ CPM= A/mapped reads*1000000 A为比对到某基因的reads数(read count)
 
 2、RPKM
 
-3、FPKM
+3、
+FPKM：分母除以总表达量
+FPKM-UQ：分母除的是75%分位的表达量
 
 4、TPM
 组内比较 TPM（不同基因在同一样品中的表达差异）
