@@ -1,9 +1,17 @@
-1、CPM：
-CPM= A/mapped reads*1000000 A为比对到某基因的reads数(read count)
+1、CPM：Counts per million
+CPM=C/N*1000000
+注：
+C为比对到gene A 的reads 数(read count)，
+N为比对到所有gene 的总reads 数。
 
-2、RPKM
+2、RPKM：Reads Per kb perMillion reads
+RPKM=(1000000C)/(NL/1000)
+注：
+C为比对到gene A 的reads数(read count)，
+N为比对到所有gene的总reads数，L为gene A的碱基数
 
-3、
+3、FPKM
+只要把RPKM的reads换成fragments,即一个fragment对应两个两端配对的reads
 FPKM：分母除以总表达量
 FPKM-UQ：分母除的是75%分位的表达量
 
